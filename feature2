@@ -8,21 +8,31 @@ feature2 commit 2
       <artifactId>jib-maven-plugin</artifactId>
       <version>3.3.1</version>
       <configuration>
+        <!-- First base image (Java 8) -->
         <from>
-          <image>registry/baseimages/eclipse-temurin:11-alpine</image>
+          <image>registry/baseimages/eclipse-temurin:8-alpine</image>
         </from>
+
+        <!-- Copy from Java 11 image -->
+        <extraDirectories>
+          <paths>
+            <path>
+              <from>registry/baseimages/eclipse-temurin:11-alpine</from>
+              <into>${project.build.directory}/libs</into>
+            </path>
+          </paths>
+        </extraDirectories>
+
         <to>
-          <image>your-registry/your-image-name:tag</image>
+          <image>your-registry/your-target-image:tag</image>
         </to>
+
         <container>
           <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
           <user>jenkins</user>
-          <environment>
-            <JAVA_HOME>/path/to/java/home</JAVA_HOME>
-          </environment>
           <files>
             <file>
-              <src>/lib/libsunec.so</src>
+              <src>${project.build.directory}/libs/${JAVA_HOME}/lib/libsunec.so</src>
               <dest>${JAVA_HOME}/jre/lib/amd64/libsunec.so</dest>
             </file>
           </files>
