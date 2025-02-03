@@ -1,2 +1,33 @@
 feature2 commit 1
 feature2 commit 2
+
+<build>
+  <plugins>
+    <plugin>
+      <groupId>com.google.cloud.tools</groupId>
+      <artifactId>jib-maven-plugin</artifactId>
+      <version>3.3.1</version>
+      <configuration>
+        <from>
+          <image>registry/baseimages/eclipse-temurin:11-alpine</image>
+        </from>
+        <to>
+          <image>your-registry/your-image-name:tag</image>
+        </to>
+        <container>
+          <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+          <user>jenkins</user>
+          <environment>
+            <JAVA_HOME>/path/to/java/home</JAVA_HOME>
+          </environment>
+          <files>
+            <file>
+              <src>/lib/libsunec.so</src>
+              <dest>${JAVA_HOME}/jre/lib/amd64/libsunec.so</dest>
+            </file>
+          </files>
+        </container>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
